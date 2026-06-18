@@ -1,5 +1,7 @@
 package com.san.batch_service.tasklet;
 
+import java.io.File;
+
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.scope.context.ChunkContext;
@@ -8,7 +10,7 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
+import com.san.batch_service.repository.ProcessedFileRepository;
 
 @Component
 @StepScope
@@ -16,6 +18,16 @@ public class FileValidationTasklet implements Tasklet {
 
 	@Value("#{jobParameters['fileName']}")
 	private String fileName;
+	
+	 private final ProcessedFileRepository repository;
+	 
+
+	public FileValidationTasklet(ProcessedFileRepository repository) {
+		super();
+		this.repository = repository;
+	}
+
+
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
@@ -28,8 +40,15 @@ public class FileValidationTasklet implements Tasklet {
 
 			throw new RuntimeException("Input file not found : " + fileName);
 		}
+		
+		 if (repository.existsByFileName(
+	                file.getName())) {
 
-		System.out.println("File validation successful");
+	            throw new RuntimeException(
+	                    "File already processed");
+	        }
+
+		System.out.println("File validation successful : "+fileName);
 
 		return RepeatStatus.FINISHED;
 	}

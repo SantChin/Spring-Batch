@@ -10,26 +10,26 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JobRunnerConfig {
 
-    @Bean
-    CommandLineRunner runJob(
-            JobLauncher jobLauncher,
-            Job employeeJob) {
-
-        return args -> {
-
-            var params =
-                    new JobParametersBuilder()
-                            .addString(
-                                    "fileName",
-                                    "emp.csv")
-                            .addLong(
-                                    "run.id",
-                                    123L)
-                            .toJobParameters();
-
-            jobLauncher.run(
-                    employeeJob,
-                    params);
-        };
-    }
+//    @Bean
+//    CommandLineRunner runJob(
+//            JobLauncher jobLauncher,
+//            Job employeeJob) {
+//
+//        return args -> {
+//
+//            var params =
+//                    new JobParametersBuilder()
+//                            .addString(
+//                                    "fileName",
+//                                    "emp.csv")
+//                            .addLong(
+//                                    "run.id",
+//                                    123L)
+//                            .toJobParameters();
+//
+//            jobLauncher.run(
+//                    employeeJob,
+//                    params);
+//        };
+//    }
 }

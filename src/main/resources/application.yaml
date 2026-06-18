@@ -3,7 +3,7 @@ spring:
     name: batch-service
   batch:
     job:
-      enabled: true
+      enabled: false
     jdbc:
       initialize-schema: always
   datasource: 
@@ -12,4 +12,10 @@ spring:
     password: root
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: update	
+
+batch:
+  file:
+    input-directory: C:\Santosh Workspace\Batch\Input
+    archive-directory: C:\Santosh Workspace\Batch\Archive
+    error-directory: C:\Santosh Workspace\Batch\Error
